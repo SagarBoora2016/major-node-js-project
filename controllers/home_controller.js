@@ -1,3 +1,6 @@
 module.exports.home= function(re1,res){
-    res.end("<h1>Hello there, in home</h1>");
+    console.log("home");
+    return res.render("home",{
+        title: "This is my Title."
+    });
 }
