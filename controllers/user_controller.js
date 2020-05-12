@@ -17,7 +17,31 @@ module.exports.signIn = function(req,res){
     });
 }
 module.exports.createSession =function(req,res){
-    
+    User.findOne({email:req.body.email},function(err,user){
+        //error in connecting to mongodb
+        if(err){
+            console.log("Error in connecting to mongo Db");
+            return res.redirect("back");
+        }else{
+            //user found
+            if(user){
+                //user found
+                // console.log(req.body);
+                // console.log(user.password);
+                if(user.password != req.body.password){
+                    //different password
+                    console.log("Password not matching.")
+                    return res.redirect("back");
+                }
+                res.cookie({'user_id':user._id});
+                return res.redirect("/users/profile");
+            }else{
+                //user not found in db
+                console.log("User not in db");
+            }
+        }
+
+    });
 
     //To Do
 }
