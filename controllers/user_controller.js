@@ -1,10 +1,26 @@
 const User = require("../models/user-sign-up");
+
 module.exports.profile = function(req,res){
     // res.end("<h1>USer PRofile</h1>");
-    console.log("Users profile");
-    return res.render("user-profile",{
-        title:"My title"
-    });
+    if(req.cookies.user_id){
+        User.findById({_id:req.cookies.user_id},function(err,user){
+            if(err){
+                console.log("Error in connecting to db");
+                return;
+            }
+            if(user){
+                return res.render("user-profile",{
+                    title:"Profile Page",
+                    user:user
+                });
+            }else{
+                return res.redirect("/users/sign-in");
+            }
+        });
+    }else{
+        return res.redirect("/users/sign-in");
+    }
+   
 }
 module.exports.signUp = function(req,res){
     return res.render("user-sign-up",{
@@ -12,6 +28,11 @@ module.exports.signUp = function(req,res){
     });
 }
 module.exports.signIn = function(req,res){
+    var ck = req.cookies;
+    // console.log(ck);
+    if(ck.user_id !=undefined){
+        return res.redirect("/users/profile");
+    }
     return res.render("user-sign-in",{
         title:"Sign In Page"
     });
@@ -77,4 +98,8 @@ module.exports.create = function(req,res){
             return res.redirect("back");
         }
     }); 
+}
+module.exports.signOut = function(req,res){
+    res.clearCookie('user_id');
+    return res.redirect("/users/sign-in");
 }
