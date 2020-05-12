@@ -33,7 +33,8 @@ module.exports.createSession =function(req,res){
                     console.log("Password not matching.")
                     return res.redirect("back");
                 }
-                res.cookie({'user_id':user._id});
+                res.cookie('user_id',user["id"]);
+                console.log(user._id);
                 return res.redirect("/users/profile");
             }else{
                 //user not found in db
