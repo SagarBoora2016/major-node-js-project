@@ -5,3 +5,13 @@ module.exports.profile = function(req,res){
         title:"My title"
     });
 }
+module.exports.signUp = function(req,res){
+    return res.render("user-sign-up",{
+        title:"My sign up  page"
+    });
+}
+module.exports.signIn = function(req,res){
+    return res.render("user-sign-in",{
+        title:"Sign In Page"
+    });
+}
