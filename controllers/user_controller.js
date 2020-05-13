@@ -16,11 +16,10 @@ module.exports.signIn = function(req,res){
         title:"Sign In Page"
     });
 }
-module.exports.createSession =function(req,res){
-    
-
-    //To Do
+module.exports.createSession = function(req, res){
+    return res.redirect('/');
 }
+
 module.exports.create = function(req,res){
     //TO Do
     // console.log('here');
