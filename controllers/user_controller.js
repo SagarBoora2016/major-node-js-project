@@ -38,6 +38,8 @@ module.exports.signIn = function(req,res){
     });
 }
 module.exports.createSession =function(req,res){
+    // console.log(req.cookies);
+    req.cookie("user_id","1");
     User.findOne({email:req.body.email},function(err,user){
         //error in connecting to mongodb
         if(err){
@@ -54,8 +56,10 @@ module.exports.createSession =function(req,res){
                     console.log("Password not matching.")
                     return res.redirect("back");
                 }
-                res.cookie('user_id',user["id"]);
-                console.log(user._id);
+                // console.log(user.id);
+                res.cookie('user_id',user.id);
+
+                
                 return res.redirect("/users/profile");
             }else{
                 //user not found in db
