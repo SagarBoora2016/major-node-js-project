@@ -62,3 +62,8 @@ module.exports.create = function(req,res){
         }
     }); 
 }
+
+module.exports.signOut = function(req,res){
+    req.logout();
+    res.redirect('/');
+}
