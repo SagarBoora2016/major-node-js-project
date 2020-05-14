@@ -20,6 +20,8 @@ app.use(express.static("./assets"));
 // console.log(expressLayouts + "used");
 app.set("view engine","ejs");
 app.set("views","./views");
+const MongoStore = require('connect-mongo')(session);
+
 app.use(session({
     name:"sociel",
     secret:"bbkivines",
@@ -27,8 +29,17 @@ app.use(session({
     resave:false,
     cookie: {
         maxAge: (1000 * 60 * 100)
-    }
+    },
+    store: new MongoStore({ 
+        mongooseConnection: db,
+        autoRemove: 'disabled'
+    },
+        function(err){
+            console.log(err || "Error connecting in momgo");
+        }
+    )
 }));
+
 app.use(passport.initialize());
 app.use(passport.session()); 
 app.use(passport.setAuthenticatedUser);
