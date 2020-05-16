@@ -1,25 +1,29 @@
  <header>
-    This is my header
-    <ul>
-        <% if(locals.user){ %>
-            <li>
-                <a href="/users/profile">
-                    <%=user.name %>
-                </a>
-            </li>
-            
-        <% }else{ %>
-            <li>
-                <a href="/users/sign-in">
-                    Sign-In
-                </a>
-            </li>
-            <li>
-                <a href="/users/sign-up">
-                    Sign-Up
-                </a>
-            </li>
+    <div class="sociel-heading">
+        soceial
+    </div>
+    <div class="sociel-links">
+        <ul>
+            <% if(locals.user){ %>
+                <li>
+                    <a href="/users/profile">
+                        <%=user.name %>
+                    </a>
+                </li>
+                
+            <% }else{ %>
+                <li>
+                    <a href="/users/sign-in">
+                        Sign-In
+                    </a>
+                </li>
+                <li>
+                    <a href="/users/sign-up">
+                        Sign-Up
+                    </a>
+                </li>
 
-        <%  }  %>
-    </ul>
+            <%  }  %>
+        </ul>
+    </div>
 </header>

@@ -1,0 +1,23 @@
+footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  background-color: grey; }
+  footer .rights {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+    padding-left: 10px; }
+  footer .footer-link ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: flex-start;
+    list-style: none; }
+    footer .footer-link ul li {
+      height: 1.2rem;
+      margin-left: 10px; }
+      footer .footer-link ul li a {
+        color: white;
+        text-decoration: none; }

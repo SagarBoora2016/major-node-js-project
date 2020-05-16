@@ -1,0 +1,35 @@
+header{
+    height: auto;
+    background-color: blue;
+    display: flex;
+    margin:0px;
+
+    .sociel-heading{
+        width: 50%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding-left: 10px;
+        font-size: 2rem;
+        color: white;
+        font-weight: 700;
+    }
+    .sociel-links{
+        height: auto;
+        width: 50%;
+        padding-right: 10px;
+        ul{
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            li{
+                height: 1.2rem;
+                margin-right:10px;
+                a{
+                    color: white;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

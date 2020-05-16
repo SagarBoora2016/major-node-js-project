@@ -16,11 +16,6 @@ app.use(expressLayouts);
 app.set("layout extractStyles",true);
 app.set("layout extractScripts",true);
 
-app.use(express.static("./assets"));
-// console.log(expressLayouts + "used");
-app.set("view engine","ejs");
-app.set("views","./views");
-const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require("node-sass-middleware");
 app.use(sassMiddleware({
     src:"./assets/scss",
@@ -29,6 +24,14 @@ app.use(sassMiddleware({
     outputStyle:"extended",
     prefix:"/css"
 }));
+app.use(express.static("./assets"));
+
+
+// console.log(expressLayouts + "used");
+app.set("view engine","ejs");
+app.set("views","./views");
+const MongoStore = require('connect-mongo')(session);
+
 app.use(session({
     name:"sociel",
     secret:"bbkivines",
