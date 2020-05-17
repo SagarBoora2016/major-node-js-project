@@ -67,3 +67,9 @@ module.exports.signOut = function(req,res){
     req.logout();
     res.redirect('/');
 }
+module.exports.post=function(req,res){
+    console.log(req.body);
+    return res.render("post",{
+        title:"My posts"
+    });
+}
