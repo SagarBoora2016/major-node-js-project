@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const passport = require("passport");
 
 module.exports.create = function(req,res){
     Post.create({
