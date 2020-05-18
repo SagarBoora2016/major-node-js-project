@@ -9,4 +9,30 @@
         <br>
         <input type="submit" value="Post">
     </form>
+
+    <div class="posts-list-contianer">
+        <% if(locals.user){%>
+            <ul>
+                <% for(post of posts){
+                    %>
+                    <li>
+                        <%=post.content%>
+                        <small>
+                            <%=post.user.name %>
+                        </small>
+                    </li>
+                    <%
+                }%>
+                
+            </ul>
+            <%
+        }else{
+            %>
+            <p> 
+                User not found.
+            </p>
+            <%
+        }
+        %>
+    </div>
 </section>

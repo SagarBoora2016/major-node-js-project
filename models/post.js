@@ -8,7 +8,7 @@ const postSchema = mongoose.Schema({
     user :{
         type:mongoose.Schema.Types.ObjectId,
         required:true,
-        refer:"User"
+        ref:"User"
     }
 },{
     timestamps:true
