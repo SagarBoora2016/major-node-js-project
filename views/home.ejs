@@ -13,7 +13,6 @@
     <% } %>
 
     <div class="posts-list-contianer">
-        <% if(locals.user){%>
             <ul>
                 <% for(post of posts){
                     %>
@@ -35,27 +34,21 @@
                                 <%} %>
                             </ul>
                         </div>
-                        <div class="post-comment">
-                            <!-- form for comment -->
-                           <form method="POST" action="/comment/create">
-                                <input type="text" placeholder="Enter your comment" name="content" required>
-                                <input type="hidden" name="postid" value="<%=post._id%>" required >
-                                <input type="submit" value="Add Comment">
-                           </form>
-                        </div>
+                        <% if(locals.user){%>
+                            <div class="post-comment">
+                                <!-- form for comment -->
+                                <form method="POST" action="/comment/create">
+                                        <input type="text" placeholder="Enter your comment" name="content" required>
+                                        <input type="hidden" name="postid" value="<%=post._id%>" required >
+                                        <input type="submit" value="Add Comment">
+                                </form>
+                            </div>
+                        <% } %>
                     </li>
                     <%
-                }%>
+                }
+                %>
                 
             </ul>
-            <%
-        }else{
-            %>
-            <p> 
-                User not found.
-            </p>
-            <%
-        }
-        %>
     </div>
 </section>
