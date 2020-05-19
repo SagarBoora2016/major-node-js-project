@@ -13,6 +13,7 @@ module.exports.create = function(req,res){
         return res.redirect("/");
     });
 }
+//delete post using destroy method
 module.exports.destroy = function(req,res){
     Post.findById(req.params.postid,function(err,post){
         if(err){
@@ -24,6 +25,7 @@ module.exports.destroy = function(req,res){
                 console.log("Error in deleting post");
                 return;
             }
+            //delete from comment db also where post id is same as post id
             Comment.deleteMany({post:post.id},function(err){
                 if(err){
                     console.log("Error in deleting comment");

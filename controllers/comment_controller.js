@@ -26,3 +26,28 @@ module.exports.create = function(req,res){
         )
     });
 }
+//delete comments using destryoy method
+module.exports.destroy = function(req,res){
+    console.log(req.query);
+    // console.log(Post.comments);
+    //delete comments from posts db
+    Post.findById(req.query.postid,function(err,post){
+        post.comments.remove(req.query.commentid);   
+        post.save();     
+        console.log("Doe");
+    });
+    //delete from comment DB
+    Comment.findById(req.query.commentid,function(err,comment){
+        if(err){
+            console.log("No comment of this id");
+            return;
+        }
+        Comment.findByIdAndDelete(req.query.commentid,function(err){
+            if(err){
+                console.log("No comment of this id");
+                return;
+            }
+            return res.redirect("/");
+        });
+    });
+}   

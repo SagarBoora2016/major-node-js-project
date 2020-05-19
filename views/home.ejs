@@ -28,6 +28,11 @@
                             <h2>Comments</h2>
                             <ul id="post-comment-<%=post._id%>">
                                 <% for (comment of post.comments){%>
+                                    <% if( locals.user && locals.user.id == comment.user.id){ %>
+                                        <a href="/comment/delete/?commentid=<%=comment.id%>&postid=<%=post.id%> ">
+                                            X
+                                        </a>
+                                    <% } %>
                                     <li>
                                         <p>
                                             <%=comment.content %> by
