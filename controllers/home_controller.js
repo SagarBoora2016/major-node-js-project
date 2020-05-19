@@ -1,6 +1,6 @@
 const Post = require("../models/post")
 module.exports.home= function(req,res){
-    console.log("home");
+    // console.log("home");
     // console.log(req.cookies);
     // res.cookie("user_id","100");
     // res.cookie("something","thats rifht 2 times");

@@ -8,6 +8,7 @@ router.get("/",homeColtroller.home);
 router.use("/users",require("./users"));
 router.use("/delete",require("./delete"));
 router.use("/post",require("./post"));
+router.use("/comment",require("./comment"));
 
 
 module.exports = router;

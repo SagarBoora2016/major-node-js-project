@@ -17,11 +17,12 @@ app.use(expressLayouts);
 app.set("layout extractStyles",true);
 app.set("layout extractScripts",true);
 
+
 const sassMiddleware = require("node-sass-middleware");
 app.use(sassMiddleware({
     src:"./assets/scss",
     dest:"./assets/css",
-    debug:true,
+    debug:false,
     outputStyle:"extended",
     prefix:"/css"
 }));
