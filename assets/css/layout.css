@@ -3,6 +3,8 @@ body {
   text-align: center;
   font-family: Arial, Helvetica, sans-serif; }
   body .my-body {
-    height: 100%;
+    height: auto;
     background-color: white;
     margin: 0px; }
+  body .posts-list-contianer {
+    height: auto; }

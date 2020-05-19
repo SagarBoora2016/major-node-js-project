@@ -5,7 +5,14 @@ module.exports.home= function(req,res){
     // res.cookie("user_id","100");
     // res.cookie("something","thats rifht 2 times");
     if(req.user){
-        Post.find({}).populate("user").exec(function(err,posts){
+        Post.find({}).populate("user").
+        populate({
+            path:'comments',
+            populate:{
+                path:"user"
+            }
+        })
+        .exec(function(err,posts){
             if(err){
                 console.log("Error in connecting to Db");
                 return;
