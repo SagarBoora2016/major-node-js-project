@@ -28,26 +28,29 @@ module.exports.create = function(req,res){
 }
 //delete comments using destryoy method
 module.exports.destroy = function(req,res){
-    console.log(req.query);
-    // console.log(Post.comments);
-    //delete comments from posts db
-    Post.findById(req.query.postid,function(err,post){
-        post.comments.remove(req.query.commentid);   
-        post.save();     
-        console.log("Doe");
-    });
-    //delete from comment DB
-    Comment.findById(req.query.commentid,function(err,comment){
+    Comment.findById(req.params.id,function(err,comment){
         if(err){
-            console.log("No comment of this id");
+            console.log("Error in founding comment");
             return;
         }
-        Comment.findByIdAndDelete(req.query.commentid,function(err){
+        var postId = comment.post;
+        Post.findById(comment.post,function(err,post){
             if(err){
-                console.log("No comment of this id");
+                console.log("Error in deleting coment from psot");
                 return;
             }
-            return res.redirect("/");
+            if(req.user.id == comment.user || comment.post == post.id ) {
+                Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}},function(err){
+                    if(err){
+                        console.log("Error in deleting coment from psot");
+                        return;
+                    }
+                    comment.remove();
+                    return res.redirect("/");
+                });
+            }
         });
+        
+
     });
 }   

@@ -14,51 +14,7 @@
 
     <div class="posts-list-contianer">
             <ul>
-                <% for(post of posts){
-                    %>
-                    <% if( locals.user && locals.user.id == post.user.id){ %>
-                        <a href="/post/delete/<%=post.id %> ">
-                            X
-                        </a>
-                    <% } %>
-                    <li>
-                        <%=post.content%> By <%=post.user.name %>
-                        <br>
-                        <div class="post-comment-list">
-                            <h2>Comments</h2>
-                            <ul id="post-comment-<%=post._id%>">
-                                <% for (comment of post.comments){%>
-                                    <% if( locals.user && locals.user.id == comment.user.id){ %>
-                                        <a href="/comment/delete/?commentid=<%=comment.id%>&postid=<%=post.id%> ">
-                                            X
-                                        </a>
-                                    <% } %>
-                                    <li>
-                                        <p>
-                                            <%=comment.content %> by
-                                        </p>
-                                        <small>
-                                            <%= comment.user.name %>
-                                        </small>
-                                    </li>
-                                <%} %>
-                            </ul>
-                        </div>
-                        <% if(locals.user){%>
-                            <div class="post-comment">
-                                <!-- form for comment -->
-                                <form method="POST" action="/comment/create">
-                                        <input type="text" placeholder="Enter your comment" name="content" required>
-                                        <input type="hidden" name="postid" value="<%=post._id%>" required >
-                                        <input type="submit" value="Add Comment">
-                                </form>
-                            </div>
-                        <% } %>
-                    </li>
-                    <%
-                }
-                %>
-                
+                <%- include("_post") -%>
             </ul>
     </div>
 </section>
