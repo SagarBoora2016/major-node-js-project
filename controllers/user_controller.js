@@ -3,10 +3,14 @@ const passport = require("passport");
 
 module.exports.profile = function(req,res){
     // res.end("<h1>USer PRofile</h1>");
-    console.log("Users profile");
-    return res.render("user-profile",{
-        title:"My title"
+    User.findById(req.params.id,function(err,user){
+        // console.log("Users profile");
+        return res.render("user-profile",{
+            title:"My title",
+            current_user:user
+        });
     });
+    
 }
 module.exports.signUp = function(req,res){
     if(req.isAuthenticated()){
