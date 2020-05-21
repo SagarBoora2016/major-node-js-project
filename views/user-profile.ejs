@@ -1,4 +1,15 @@
 <link rel="stylesheet" href="/css/user-profile.css">
 <h1>Welcome To Profile</h1>
-<p><%=current_user.name %></p>
-<p><%=current_user.email %></p>
+
+<% if(locals.user.id==current_user.id) {%>
+    <!-- show user if he is logged in -->
+    <form action="/users/update/<%=user.id %>" method="POST">
+        <input type="text" name="name" placeholder="Add your name" required value="<%=current_user.name%>" >
+        <input type="email" name="email" placeholder="Add your email" required value="<%=current_user.email%>">
+        <input type="submit" value="Update">
+    </form>
+<% }else { %>
+    <!-- show user details if he is not the one logged in  -->
+    <p><%=current_user.name %></p>
+    <p><%=current_user.email %></p>
+<%}%>
