@@ -3,21 +3,23 @@ const User = require("../models/user-sign-up");
 
 const LocalStrategy = require("passport-local").Strategy;
 passport.use(new LocalStrategy({
-        usernameField:"email"
+        usernameField:"email",
+        passReqToCallback:true
     },
-    function(email,password,done){
+    function(req,email,password,done){
         console.log(email);
         User.findOne({email:email},function(err,user){
             console.log("We are here");
             if(err){
                 console.log("Error in connecting to DB");
+                req.flash("error",err);
                 return done(err);
             }
             if(!user || user.password != password){
                 console.log("User not valid");
+                req.flash("error","Invalid userId and Password.");
                 return done(null,false);
             }    
-            console.log("User found");
             return done(null,user);
         });
         }
