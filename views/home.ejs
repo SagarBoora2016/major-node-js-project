@@ -13,9 +13,12 @@
             </form>
         <% } %>
     
-        <div class="posts-list-contianer">
+        <div id="posts-list-contianer">
                 <ul>
-                    <%- include("_post") -%>
+                    <% for(post of posts){
+                    %>
+                        <%- include("_post") -%>
+                    <% } %>
                 </ul>
         </div>
     </section>
