@@ -2,19 +2,26 @@ const Post = require("../models/post");
 const passport = require("passport");
 const Comment = require("../models/comment");
 
-module.exports.create = function(req,res){
-    Post.create({
-        content:req.body.content,
-        user:req.user._id
-    },function(err,post){
-        if(err){
-            req.flash("error","error");
-            console.log("Error is conecting to Db");
-            return;
-        }
+module.exports.create = async function(req,res){
+    try{
+        let post= await Post.create({
+            content:req.body.content,
+            user:req.user._id
+        });
+        // if(req.xhr){
+        //     return res.status(200).json({
+        //         data:{
+        //             post:post
+        //         },
+        //         message:"Post Created"
+        //     });
+        // }
+
         req.flash("success","Post Published.");
         return res.redirect("/");
-    });
+    }catch(err){
+        console.log(err);
+    }
 }
 //delete post using destroy method
 module.exports.destroy =async function(req,res){
