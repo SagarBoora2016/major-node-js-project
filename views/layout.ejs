@@ -12,7 +12,11 @@
     <body>
       
         <%- include('_header'); -%>
-        
+        <% if(flash.success && flash.success.length >0) {%>
+            <h1>
+                <%=flash.success %>
+            </h1>     
+        <%}%>
         <main class="my-body">
             <%- body %>
         

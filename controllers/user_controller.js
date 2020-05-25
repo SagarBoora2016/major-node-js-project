@@ -40,6 +40,7 @@ module.exports.signIn = function(req,res){
     });
 }
 module.exports.createSession = function(req, res){
+    req.flash("success","Logged In Successfully");
     return res.redirect('/');
 }
 
@@ -77,6 +78,7 @@ module.exports.create = function(req,res){
 }
 
 module.exports.signOut = function(req,res){
+    req.flash("success","Logged Out Successfully");
     req.logout();
     res.redirect('/');
 }

@@ -15,25 +15,15 @@ module.exports.create = function(req,res){
     });
 }
 //delete post using destroy method
-module.exports.destroy = function(req,res){
-    Post.findById(req.params.postid,function(err,post){
-        if(err){
-            console.log("Error in finding post");
-            return;
-        }
-        Post.findByIdAndDelete(post.id,function(err){
-            if(err){
-                console.log("Error in deleting post");
-                return;
-            }
-            //delete from comment db also where post id is same as post id
-            Comment.deleteMany({post:post.id},function(err){
-                if(err){
-                    console.log("Error in deleting comment");
-                    return;
-                }
-                res.redirect("/");
-            })
-        });
-    });
+module.exports.destroy =async function(req,res){
+    try{
+        let post = await Post.findById(req.params.postid);
+        await Post.findByIdAndDelete(post.id);
+        //delete from comment db also where post id is same as post id
+        await Comment.deleteMany({post:post.id});
+        res.redirect("/");
+    }catch(err){
+        console.log(err);
+        return;
+    }
 }
