@@ -4,11 +4,16 @@ const Comment = require("../models/comment");
 
 module.exports.create = async function(req,res){
     try{
-        let post= await Post.create({
+        let post1= await Post.create({
             content:req.body.content,
             user:req.user._id
         });
+        let post = await Post.findById({_id:post1.id}).populate("user","name");
+        // let post  = post1.populate("user");
+        // console.log(post);
         if(req.xhr){
+            // post.populate("user");
+            
             return res.status(200).json({
                 data:{
                     post:post
@@ -31,7 +36,6 @@ module.exports.destroy =async function(req,res){
         //delete from comment db also where post id is same as post id
         await Comment.deleteMany({post:post.id});
         if(req.xhr){
-            console.log("xhr");
             return res.status(200).json({
                 data:{
                     post_id:req.params.postid
@@ -43,7 +47,8 @@ module.exports.destroy =async function(req,res){
         res.redirect("/");
     }catch(err){
         console.log(err);
-        req.flash("error",er);
+        req.flash("error",err);
         return;
+
     }
 }

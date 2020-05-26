@@ -11,10 +11,15 @@
                 success:function(data){
                     console.log(data);
                     let newPost = newPostDom(data.data.post);
-                    console.log(newPost);
                     $("#posts-list-contianer>ul").append(newPost);
                     deletePost(" .delete-post-button",newPost);
-                    console.log("post created");
+                    new Noty({
+                        theme:'relax',
+                        text:"Post Created.",
+                        type:"success",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
                 },
                 error:function(err){
                     console.log(err.responseText);
@@ -48,12 +53,19 @@
         $(deleteLink).click(function(e){
             console.log("Prevented default");
             e.preventDefault();
+            
             $.ajax({
                 type:"get",
                 url:$(deleteLink).prop("href"),
                 success:function(data){
                     $(`#post-${data.data.post_id}`).remove();
-                    console.log("removed");
+                    new Noty({
+                        theme:'relax',
+                        text:"Post Deleted",
+                        type:"success",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
                 },
                 error:function(err){
                     console.log(err.responseText);
