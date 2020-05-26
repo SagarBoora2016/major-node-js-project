@@ -36,17 +36,19 @@
                 </a>
                 ${post.content} By ${post.user.name}
                 <div class="post-comment-list">
-                </div>
+                <h2>Comments</h2>
+                    <%- include("_comment") -%>
+                
                     <div class="post-comment">
-                        <!-- form for comment -->
                         <form method="POST" action="/comment/create">
                                 <input type="text" placeholder="Enter your comment" name="content" required>
-                                <input type="hidden" name="postid" value="${post._id} required >
+                                <input type="hidden" name="postid" value="${post._id}" required >
                                 <input type="submit" value="Add Comment">
                         </form>
                     </div>
+                </div>
         
-                </li>
+            </li>
         `);
     }
     let deletePost = function(deleteLink){
