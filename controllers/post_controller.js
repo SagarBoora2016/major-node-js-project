@@ -27,9 +27,18 @@ module.exports.create = async function(req,res){
 module.exports.destroy =async function(req,res){
     try{
         let post = await Post.findById(req.params.postid);
-        await Post.findByIdAndDelete(post.id);
+        await Post.findByIdAndDelete(post._id);
         //delete from comment db also where post id is same as post id
         await Comment.deleteMany({post:post.id});
+        if(req.xhr){
+            console.log("xhr");
+            return res.status(200).json({
+                data:{
+                    post_id:req.params.postid
+                },
+                message:"Post Deleted Successfully"
+            });
+        }
         req.flash("success","Post and associated comments Deleted.");
         res.redirect("/");
     }catch(err){
