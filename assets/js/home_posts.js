@@ -75,5 +75,56 @@
             })
         });
     }
+    let createComment = function(postID){
+        let newCommentForm = $(`#new-comment-form-${postID}`);
+        newCommentForm.submit(function(e){
+            console.log("here");
+            e.preventDefault();
+            console.log(newCommentForm.serialize());
+            
+            $.ajax({
+                type:"post",
+                url:"/comment/create",
+                data:newCommentForm.serialize(),
+                success:function(data){
+                    console.log(data.data.comment.post);
+                    let newComment = newCommentDom(data);
+                    $(`#post-comment-${data.data.post._id}`).append(newComment);
+                    console.log("done");
+
+                },
+                error:function(err){
+                    console.log(err.responseText);
+                }
+            });
+        });
+    }
+    let newCommentDom = function(comment){
+        console.log(comment.data.comment.content);
+        return $(`
+            <li>
+                <a class="delete-comment-button" href="/comment/delete/${comment.data.comment._id}">
+                    X
+                </a>
+                <p>
+                    ${comment.data.comment.content} by
+                </p>
+                <small>
+                    ${comment.data.comment.user}
+                </small>
+            </li>
+        `);
+    }
+    let posttoajax=function()
+    {
+        $(`#posts-list-contianer>ul>li`).each(function(){
+            let self=$(this);
+            let id=self.prop("id").split("-")[1];
+            let deletePostButton=$(" .delete-post-button",self);
+            deletePost(deletePostButton);
+            createComment(id);
+        });
+    }
+    posttoajax()
     createPost();
 }

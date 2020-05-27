@@ -3,15 +3,29 @@ const Comment = require("../models/comment");
 
 module.exports.create =async function(req,res){
     // find if the post exist
+    // console.log(req.body);
     try{
+       
         let post =await Post.findById(req.body.postid);
         let comment = await Comment.create({
                 content:req.body.content,
                 post:req.body.postid,
                 user:req.user._id
             });
+        console.log(comment);
         post.comments.push(comment);
         post.save();
+        if(req.xhr){
+            console.log("Inside");
+            return res.status(200).json({
+                data:{
+                    comment:comment,
+                    post:post
+                },
+                message:"Comment Created"
+            });
+        }
+        
         req.flash("success","Comment Published.")
         return res.redirect("/");
     }catch(err){

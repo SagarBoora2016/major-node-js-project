@@ -6,18 +6,19 @@
         <%}%>
         <%=post.content%> By <%=post.user.name %>
         <br>
-        <div class="post-comment-list">
-            <h2>Comments</h2>
-            <%- include("_comment") -%>
-        </div>
+        
         <% if(locals.user){%>
             <div class="post-comment">
                 <!-- form for comment -->
-                <form method="POST" action="/comment/create">
+                <form method="POST" id="new-comment-form-<%=post._id%>" action="/comment/create>">
                         <input type="text" placeholder="Enter your comment" name="content" required>
                         <input type="hidden" name="postid" value="<%=post._id%>" required >
                         <input type="submit" value="Add Comment">
                 </form>
             </div>
         <% } %>
+        <div id="post-comment-list">
+            <h2>Comments</h2>
+            <%- include("_comment") -%>
+        </div>
 </li>
