@@ -27,7 +27,6 @@ passport.use(new LocalStrategy({
 );
 //Serailiging the user with cookie
 passport.serializeUser(function(user, done) {
-    console.log("Serialize Done");
     done(null, user.id);
     
 });
@@ -39,6 +38,7 @@ passport.deserializeUser(function(id,done){
             console.log("Error is connecting to user");
             return done(err);
         }
+        // console.log(user);
         return done(null,user);
     });
 });

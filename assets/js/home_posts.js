@@ -12,7 +12,10 @@
                     console.log(data);
                     let newPost = newPostDom(data.data.post);
                     $("#posts-list-contianer>ul").append(newPost);
-                    deletePost(" .delete-post-button",newPost);
+                    // deletePost(" .delete-post-button",newPost);
+                    deletePost(`post-${data.data.post._id} .delete-post-button`);
+                    createComment(data.data.post._id);
+                    
                     new Noty({
                         theme:'relax',
                         text:"Post Created.",
@@ -23,31 +26,36 @@
                 },
                 error:function(err){
                     console.log(err.responseText);
+                    new Noty({
+                        theme:'relax',
+                        text:"Eror in creating post",
+                        type:"error",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
                 }
 
             });
         });
     }
     let newPostDom = function(post){
-        console.log(post);
         return $(`<li id="post-${post._id}">
                 <a class="delete-post-button" href="/post/delete/${post._id}">
                     X
                 </a>
                 ${post.content} By ${post.user.name}
-                <div class="post-comment-list">
-                <h2>Comments</h2>
-                    <%- include("_comment") -%>
-                
-                    <div class="post-comment">
-                        <form method="POST" action="/comment/create">
-                                <input type="text" placeholder="Enter your comment" name="content" required>
-                                <input type="hidden" name="postid" value="${post._id}" required >
-                                <input type="submit" value="Add Comment">
-                        </form>
-                    </div>
+                <div class="post-comment">
+                    <form method="POST" id="new-comment-form-${post._id}" action="/comment/create">
+                            <input type="text" placeholder="Enter your comment" name="content" required>
+                            <input type="hidden" name="postid" value="${post._id}" required >
+                            <input type="submit" value="Add Comment">
+                    </form>
                 </div>
-        
+                <div class="post-comment-list">
+                    <h2>Comments</h2>
+                        <ul id="post-comment-${post._id}">
+                        </ul>
+                </div>
             </li>
         `);
     }
@@ -55,7 +63,6 @@
         $(deleteLink).click(function(e){
             console.log("Prevented default");
             e.preventDefault();
-            
             $.ajax({
                 type:"get",
                 url:$(deleteLink).prop("href"),
@@ -71,6 +78,13 @@
                 },
                 error:function(err){
                     console.log(err.responseText);
+                    new Noty({
+                        theme:'relax',
+                        text:"Error in deleting Post.",
+                        type:"error",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
                 }
             })
         });
@@ -78,40 +92,49 @@
     let createComment = function(postID){
         let newCommentForm = $(`#new-comment-form-${postID}`);
         newCommentForm.submit(function(e){
-            console.log("here");
             e.preventDefault();
-            console.log(newCommentForm.serialize());
-            
             $.ajax({
                 type:"post",
                 url:"/comment/create",
                 data:newCommentForm.serialize(),
                 success:function(data){
-                    console.log(data.data.comment.post);
                     let newComment = newCommentDom(data);
                     $(`#post-comment-${data.data.post._id}`).append(newComment);
-                    console.log("done");
-
+                    deleteComment(`#comment-${data.data.comment._id} .delete-comment-button`);
+                    new Noty({
+                        theme:'relax',
+                        text:"Comment Created.",
+                        type:"success",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
                 },
                 error:function(err){
                     console.log(err.responseText);
+                    new Noty({
+                        theme:'relax',
+                        text:"Error in creating comment",
+                        type:"error",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
                 }
             });
         });
     }
     let newCommentDom = function(comment){
-        console.log(comment.data.comment.content);
         return $(`
-            <li>
-                <a class="delete-comment-button" href="/comment/delete/${comment.data.comment._id}">
+            <li id="comment-${comment.data.comment._id}">
+                <a class="delete-comment-button" href="/comment/delete/${comment.data.comment._id} ">
                     X
                 </a>
                 <p>
                     ${comment.data.comment.content} by
+                    <small>
+                        ${comment.data.comment.user.name}
+                    </small>
                 </p>
-                <small>
-                    ${comment.data.comment.user}
-                </small>
+                
             </li>
         `);
     }
@@ -125,6 +148,47 @@
             createComment(id);
         });
     }
-    posttoajax()
+    let commenttoajax = function(){
+        $("#post-comment-list>ul>li").each(function(){
+            let self = $(this);
+            let id = self.prop("id").split("-")[1];
+            let deleteCommentButton = $(" .delete-comment-button",self);
+            deleteComment(deleteCommentButton);
+        });
+    }
+    let deleteComment = function(deleteLink){
+        console.log(deleteLink);
+        
+        $(deleteLink).click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type:"get",
+                url:$(deleteLink).prop("href"),
+                success:function(data){
+                    console.log($(deleteLink).prop("href"));
+                    $(`#comment-${data.data.comment}`).remove();
+                    new Noty({
+                        theme:'relax',
+                        text:"Comment Deleted haha .",
+                        type:"success",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
+                },
+                error:function(err){
+                    console.log(err.responseText);
+                    new Noty({
+                        theme:'relax',
+                        text:"Error in deleting comment.",
+                        type:"error",
+                        layout:"topRight",
+                        timeout:1500
+                    }).show();
+                }
+            });
+        });
+    }
+    posttoajax();
+    commenttoajax();
     createPost();
 }
