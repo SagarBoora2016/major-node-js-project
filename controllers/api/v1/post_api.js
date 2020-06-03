@@ -17,12 +17,18 @@ module.exports.index =async function(req,res){
 module.exports.delete = async function(req,res){
     try{
         let post = await Post.findById(req.params.id);
-        await Post.findByIdAndDelete(post._id);
-        //delete from comment db also where post id is same as post id
-        await Comment.deleteMany({post:post.id});
-        return res.status(200).json({
-            message:"Post Deleted Successfully"
-        });
+        if(req.user.id == post.user){
+            await Post.findByIdAndDelete(post._id);
+            //delete from comment db also where post id is same as post id
+            await Comment.deleteMany({post:post.id});
+            return res.status(200).json({
+                message:"Post Deleted Successfully"
+            });
+        }else{
+            return res.json(401,{
+                message:"You cannot delete this post"
+            });
+        }
     }catch(err){
         console.log(err);
         return res.status(500).json({
