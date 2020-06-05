@@ -1,6 +1,6 @@
 const Post = require("../models/post");
 const Comment = require("../models/comment");
-
+const commentMailer = require("../mailers/comments_mailers");
 module.exports.create =async function(req,res){
     // find if the post exist
     // console.log(req.body);
@@ -13,8 +13,8 @@ module.exports.create =async function(req,res){
                 user:req.user._id
             });
         post.comments.push(comment1);
-        let comment = await Comment.findById({_id:comment1.id}).populate("user","name");
-        
+        let comment = await Comment.findById({_id:comment1.id}).populate("user","name email");
+        commentMailer.newComment(comment);
         post.save();
         if(req.xhr){
             return res.status(200).json({
