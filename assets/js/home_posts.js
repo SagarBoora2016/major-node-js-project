@@ -9,13 +9,13 @@
                 url:"/post/create",
                 data: newPostForm.serialize(),
                 success:function(data){
-                    console.log(data);
+                    // console.log(data);
                     let newPost = newPostDom(data.data.post);
                     $("#posts-list-contianer>ul").append(newPost);
                     // deletePost(" .delete-post-button",newPost);
                     deletePost(`post-${data.data.post._id} .delete-post-button`);
                     createComment(data.data.post._id);
-                    
+                    likePost(newPost,data);
                     new Noty({
                         theme:'relax',
                         text:"Post Created.",
@@ -34,8 +34,35 @@
                         timeout:1500
                     }).show();
                 }
-
             });
+        });
+    }
+    let likePost = function(newPost,data){
+        console.log(data);
+        let newLike = $(`#like-${data.data.post._id}`);
+        newLike.click(function(event){
+            event.preventDefault();
+            let ele = $(this);
+            console.log(ele.attr("id"));
+                $.ajax({
+                    method:"POST",
+                    url:"/like/toggle/?id="+ele.attr("id").split("-")[1] +"&type=Post",
+                    success:function(data){
+                        ele = ele.children("span");
+                        if(data.data.deleted){
+                            let num = parseInt(ele[0].innerText);
+                            num--;
+                            ele[0].innerText=num;
+                        }else{
+                            let num = parseInt(ele[0].innerText);
+                            num++;
+                            ele[0].innerText=num;
+                        }
+                    },
+                    error:function(err){
+                        console.log(err);
+                    }
+                });
         });
     }
     let newPostDom = function(post){
@@ -43,7 +70,10 @@
                 <a class="delete-post-button" href="/post/delete/${post._id}">
                     X
                 </a>
-                ${post.content} By ${post.user.name}
+                ${post.content}
+                <a href="/" class="like-post" id="like-${post._id}"><i class="fas fa-thumbs-up"></i> <span>0</span></a> 
+       
+                By ${post.user.name}
                 <div class="post-comment">
                     <form method="POST" id="new-comment-form-${post._id}" action="/comment/create">
                             <input type="text" placeholder="Enter your comment" name="content" required>
@@ -157,7 +187,7 @@
         });
     }
     let deleteComment = function(deleteLink){
-        console.log(deleteLink);
+        // console.log(deleteLink);
         
         $(deleteLink).click(function(e){
             e.preventDefault();

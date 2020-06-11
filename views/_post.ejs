@@ -1,10 +1,12 @@
 <li id="post-<%=post.id%>">
     <% if( locals.user && locals.user.id == post.user.id){ %>
-        <a class="delete-post-button" href="/post/delete/<%=post.id %> ">
+        <a class="delete-post-button" href="/post/delete/<%=post.id %>">
             X
         </a>
         <%}%>
-        <%=post.content%> By <%=post.user.name %>
+        <%=post.content%>
+        <a href="/" class="like-post" id="like-<%=post.id%>"><i class="fas fa-thumbs-up"></i> <span>0</span></a> 
+        By <%=post.user.name %>
         <br>
         
         <% if(locals.user){%>
