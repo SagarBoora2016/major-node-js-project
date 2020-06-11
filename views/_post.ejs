@@ -5,14 +5,14 @@
         </a>
         <%}%>
         <%=post.content%>
-        <a href="/" class="like-post" id="like-<%=post.id%>"><i class="fas fa-thumbs-up"></i> <span>0</span></a> 
+        <a href="/" class="like-post" id="like-<%=post.id%>"><i class="fas fa-thumbs-up"></i> <span><%=post.likes.length%></span></a> 
         By <%=post.user.name %>
         <br>
         
         <% if(locals.user){%>
             <div class="post-comment">
                 <!-- form for comment -->
-                <form method="POST" id="new-comment-form-<%=post._id%>" action="/comment/create>">
+                <form method="POST" id="new-comment-form-<%=post._id%>" action="/comment/create">
                         <input type="text" placeholder="Enter your comment" name="content" required>
                         <input type="hidden" name="postid" value="<%=post._id%>" required >
                         <input type="submit" value="Add Comment">

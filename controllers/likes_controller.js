@@ -5,37 +5,33 @@ const Comment = require("../models/comment");
 module.exports.toggleLike = async function(req,res){
     //url =>  likes/toggle/?id=abcd &type=Post/Comment
     try{
-        let likeable;
+        let likeable="";
         let deleted=false;
-        if(req.query.type="Post"){
+        if(req.query.type=="Post"){
             likeable = await Post.findById(req.query.id).populate("likes");
         }else{
             likeable = await Comment.findById(req.query.id).populate("likes");
         }
         // console.log(likeable);
-
         let existingLike = await Like.findOne({
             user:req.user.id,
             likeable:likeable,
             onModel:req.query.type
         });
-        // console.log(existingLike);
+        
         if(existingLike){
             likeable.likes.pull(existingLike._id);
             likeable.save();
             existingLike.remove();
             deleted= true;
-            // console.log(likeable + " likes");
         }else{
             let newLike =await Like.create({
                 user:req.user._id,
                 likeable:likeable,
                 onModel:req.query.type
             });
-            // console.log(newLike);
             likeable.likes.push(newLike._id);
             likeable.save();
-            // console.log(likeable + " likes");
         }
         return res.json(200,{
             message:"Request Successfull",

@@ -3,6 +3,7 @@ const Comment = require("../models/comment");
 const commentMailer = require("../mailers/comments_mailers");
 const queue = require("../config/Kue");
 const emailWorker = require("../worker/comment_email_worker");
+const Like = require("../models/like");
 
 module.exports.create =async function(req,res){
     // find if the post exist
@@ -43,7 +44,6 @@ module.exports.create =async function(req,res){
         req.flash("error",err);
         return;     
     }
-
 }
 //delete comments using destryoy method
 module.exports.destroy =async function(req,res){
@@ -54,6 +54,7 @@ module.exports.destroy =async function(req,res){
         if(req.user.id == comment.user || comment.post == post.id ) {
             await Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}});
             comment.remove();
+            await Like.deleteMany({onModel:"Comment",likeable:comment._id});
             if(req.xhr){
                 return res.status(200).json({
                     data:{

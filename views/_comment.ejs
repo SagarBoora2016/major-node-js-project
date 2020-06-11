@@ -2,18 +2,17 @@
     <% for (comment of post.comments){%>
         <li id="comment-<%=comment._id%>">
         <% if( locals.user && (locals.user.id == post.user.id ||locals.user.id == comment.user.id )){ %>
-            
             <a class="delete-comment-button" href="/comment/delete/<%=comment._id%>">
                 X
             </a>
         <% } %>
             <p>
                 <%=comment.content %> by
+                <a href="/" class="like-comment" id="like-<%=comment._id%>"><i class="fas fa-thumbs-up"></i> <span><%=comment.likes.length%></span></a> 
                 <small>
                     <%= comment.user.name %>
                 </small>
-            </p>
-        
+            </p>   
         <%} %>
     </li>
 </ul>
