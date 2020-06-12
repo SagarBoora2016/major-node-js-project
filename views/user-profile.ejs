@@ -12,4 +12,10 @@
     <!-- show user details if he is not the one logged in  -->
     <p><%=current_user.name %></p>
     <p><%=current_user.email %></p>
+  
+    <a href="/add/friend/<%=current_user._id%>">Add as friend<i class="fas fa-user-plus"></i></a>
+    
 <%}%>
+<script src="./js/friends.js">
+
+</script>

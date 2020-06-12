@@ -9,6 +9,7 @@ router.use("/delete",require("./delete"));
 router.use("/post",require("./post"));
 router.use("/comment",require("./comment"));
 router.use("/like",require("./like"));
+router.use("/add",require("./add-friend.js"));
 
 router.use("/api",require("./api"));
 
