@@ -1,9 +1,10 @@
 const express = require("express");
 const FriendShip = require("../models/friendship");
 const router = express.Router();
-const FriendshipController = require("../controllers/add_friend");
+const FriendshipController = require("../controllers/add_friend_controller");
 
-router.get("/friend/:id",FriendshipController.addFriend);
+
+router.post("/friend/:id",FriendshipController.addFriend);
 
 
 module.exports = router;

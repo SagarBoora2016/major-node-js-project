@@ -12,7 +12,14 @@ const userSchema = new mongoose.Schema({
     name:{
         type:String,
         required:true
-    }
+    },
+    friendship:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Friendship"
+        }
+    ]
+    //this is crct na
 },{
     timestamps:true
 }

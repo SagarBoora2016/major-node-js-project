@@ -13,9 +13,14 @@
     <p><%=current_user.name %></p>
     <p><%=current_user.email %></p>
   
-    <a href="/add/friend/<%=current_user._id%>">Add as friend<i class="fas fa-user-plus"></i></a>
+    <a id="addorremove" href="/add/friend/<%=current_user._id%>"><span>Add as friend</span><i class="fas fa-user-plus"></i></a>
     
 <%}%>
-<script src="./js/friends.js">
+<script src="/js/home_posts.js">
 
+</script>
+<script src="/js/like.js">
+
+</script>
+<script src="/js/friends.js">
 </script>

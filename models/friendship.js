@@ -5,11 +5,11 @@ const FriendshipSchema = mongoose.Schema(
     {
         from_user:{
             type:mongoose.Schema.Types.ObjectId,
-            red:"User"
+            ref:"User"
         },
         to_user:{
             type:mongoose.Schema.Types.ObjectId,
-            red:"User"
+            ref:"User"
         }
     },{
         timestamps:true

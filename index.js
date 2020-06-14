@@ -4,6 +4,10 @@ const port = 8000;
 const cookieParser = require("cookie-parser");
 const expressLayouts = require('express-ejs-layouts');
 
+const chatServer = require("http").Server(app);
+const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
+chatServer.listen(5000);
+console.log("char server is listeing on port 5000");
 
 const db = require("./config/mongoose");
 const session = require("express-session");
@@ -35,6 +39,7 @@ app.use(express.static("./assets"));
 app.set("view engine","ejs");
 app.set("views","./views");
 const MongoStore = require('connect-mongo')(session);
+
 
 app.use(session({
     name:"sociel",

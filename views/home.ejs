@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/chat-box.css">
+
 <h1>
     Welcome To Home
 </h1>
@@ -24,22 +26,74 @@
     </section>
     
     <section id="user-friends">
-        <%if(locals.user){%>
-            <%  for(u of all_users){
-                %>
-                <p>
-                    <a href="/users/profile/<%=u.id%>">
-                        <%=u.name %>
-                    </a>
-                </p>
+            
+        <div>
+            Friends
+
+            <%=friends %>
+            <% for (friend in friends){ %>
+
             <%} %>
-        <%}%>
+        </div>
+        <div>
+            All users
+            <%if(locals.user){%>
+                <%  for(u of all_users){%>
+                    <p>
+                        <a href="/users/profile/<%=u.id%>">
+                            <%=u.name %>
+                        </a>
+                    </p>
+                <%}%>
+            <%}%>
+        </div>
     
     </section>
+    <% if(locals.user){ %> 
+        <section id="chat-box">
+            <div class="text-area">
+                <ul id="chat-list">
+                    <li>
+                        <div class="other-msg">
+                            Other Message
+                        </div>
+                    </li>
+                    <li>
+                        <div class="self-msg">
+                            New Message
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="new-message">
+                <div class="new-message-input">
+                    <input type="text" name="chat" placeholder="Type something here">
+                </div>
+                <div class="new-message-button">
+                    <button>Send</button>
+                </div>
+            </div>
+        </section>
+    <%}%>
+
 </div>
 <script src="./js/home_posts.js">
 
 </script>
-<script src="./js/like.js">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js">
 
 </script>
+
+<script src="./js/friends.js">
+</script>
+<script src="./js/chat-engine.js">
+</script>
+
+
+<% if(locals.user){ %>
+    <script>
+        new ChatEngine("chat-box","<%=locals.user.email %>");
+    </script>    
+    
+<%}%>
