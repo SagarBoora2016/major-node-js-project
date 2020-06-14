@@ -43,7 +43,7 @@ module.exports.home= async function(req,res){
              .populate({
                      path : "friendship",
                      populate : {
-                        path : "from_user",
+                        path : "from_user"
                     }
                  })
                  .populate({
@@ -55,7 +55,7 @@ module.exports.home= async function(req,res){
             
             
         }
-        // console.log(user);
+        // console.log(friends);
         ///how to find from array
         return res.render("home",{
             title: "This is my Title.",

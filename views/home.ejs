@@ -27,15 +27,20 @@
     
     <section id="user-friends">
             
-        <div>
+        <div class="friends-list">
             Friends
 
-            <%=friends %>
-            <% for (friend in friends){ %>
-
+            <% for (friend of friends.friendship){ %>
+                <p>
+                    <%if(locals.user.id==friend.from_user.id){ %>
+                        <a href="/users/profile/<%=friend.to_user._id%>"><%=friend.to_user.name%></a>
+                    <%}else{%>
+                        <a href="/users/profile/<%=friend.from_user._id%>"><%=friend.from_user.name%></a>
+                    <%}%>
+                </p>
             <%} %>
         </div>
-        <div>
+        <div class="user-list">
             All users
             <%if(locals.user){%>
                 <%  for(u of all_users){%>

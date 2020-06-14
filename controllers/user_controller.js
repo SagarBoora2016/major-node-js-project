@@ -1,13 +1,35 @@
 const User = require("../models/user-sign-up");
 const passport = require("passport");
 
-module.exports.profile = function(req,res){
+module.exports.profile =async function(req,res){
     // res.end("<h1>USer PRofile</h1>");
+    let user1 = await User.findById(req.user.id).
+    populate({
+        path:"friendship",
+        populate:{
+            path:"from_user"
+        }
+    }).
+    populate({
+        path:"friendship",
+        populate:{
+            path:"to_user"
+        }
+    });
+    // console.log(user1);
+    var ans= false;
     User.findById(req.params.id,function(err,user){
-        // console.log("Users profile");
+        
+        for(friend of user1.friendship){
+            if(friend.from_user._id == req.params.id || friend.to_user._id == req.params.id){
+                ans = true;
+                break;
+            }
+        }
         return res.render("user-profile",{
             title:"My title",
-            current_user:user
+            current_user:user,
+            isfriend:ans
         });
     });
     

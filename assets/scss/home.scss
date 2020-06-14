@@ -17,7 +17,16 @@ width: 100%;
         padding:10x;
         display: flex;
         flex-direction: column;
+        .user-list{
+            display: flex;
+            flex-direction: column;
+        }
+        .friend-list{
+            display: flex;
+            flex-direction: column;
+        }
     }
+
  }
 
 }

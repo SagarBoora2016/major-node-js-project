@@ -12,8 +12,14 @@
     <!-- show user details if he is not the one logged in  -->
     <p><%=current_user.name %></p>
     <p><%=current_user.email %></p>
-  
-    <a id="addorremove" href="/add/friend/<%=current_user._id%>"><span>Add as friend</span><i class="fas fa-user-plus"></i></a>
+    <a id="addorremove" href="/add/friend/<%=current_user._id%>">
+    <%if(!isfriend){%> 
+        <span>Add as friend</span><i class="fas fa-user-plus"></i>
+    <%}else{%>
+        <span>Remove as friend</span><i class="fas fa-user-times"></i>
+    <%}%>
+    
+    </a>
     
 <%}%>
 <script src="/js/home_posts.js">
