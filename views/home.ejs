@@ -28,17 +28,21 @@
     <section id="user-friends">
             
         <div class="friends-list">
-            Friends
+            <%if(locals.user){%> 
+               
+                Friends
 
-            <% for (friend of friends.friendship){ %>
-                <p>
-                    <%if(locals.user.id==friend.from_user.id){ %>
-                        <a href="/users/profile/<%=friend.to_user._id%>"><%=friend.to_user.name%></a>
-                    <%}else{%>
-                        <a href="/users/profile/<%=friend.from_user._id%>"><%=friend.from_user.name%></a>
-                    <%}%>
-                </p>
-            <%} %>
+                <% for (friend of friends.friendship){ %>
+                    <p>
+                        <%if(locals.user.id==friend.from_user.id){ %>
+                             <a href="/add/friend/<%=friend.to_user._id%>"><%=friend.to_user.name%>
+                        <%}else{%>
+                            <a href="/users/profile/<%=friend.from_user._id%>"><%=friend.from_user.name%>
+                        <%}%>
+                        <span>Remove as friend</span><i class="fas fa-user-times"></i></a>
+                    </p>
+                <%} %>
+            <%}%>
         </div>
         <div class="user-list">
             All users
@@ -90,7 +94,7 @@
 
 </script>
 
-<script src="./js/friends.js">
+<script src="./js/home-friends.js">
 </script>
 <script src="./js/chat-engine.js">
 </script>

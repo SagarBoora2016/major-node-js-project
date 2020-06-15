@@ -11,11 +11,11 @@ module.exports.addFriend =async function(req,res){
     let u1 =await User.findOne({_id:req.user._id});
     let u2 =await User.findOne({_id:req.params.id});
     //i founded 2 usrs here
-    console.log(req.user);
+    // console.log(req.user);
     if(exist){
-        console.log("remove");
-        console.log(u1);
-        console.log(u2);
+        // console.log("remove");
+        // console.log(u1);
+        // console.log(u2);
         // await u1.friendship.findOne({
         //     from_user:req.user.id,
         //     to_user:req.params.id
@@ -44,11 +44,7 @@ module.exports.addFriend =async function(req,res){
         });
     }else{
         var valid = mongoose.Types.ObjectId.isValid(req.params.id);
-        if(valid){
-            console.log("valid");
-        }else{
-            console.log("Invalid");
-        }
+        
         let friendShip=await FriendShip.create({
             from_user:req.user._id,
             to_user:req.params.id
