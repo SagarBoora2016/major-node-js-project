@@ -59,30 +59,7 @@
     
     </section>
     <% if(locals.user){ %> 
-        <section id="chat-box">
-            <div class="text-area">
-                <ul id="chat-list">
-                    <li>
-                        <div class="other-msg">
-                            Other Message
-                        </div>
-                    </li>
-                    <li>
-                        <div class="self-msg">
-                            New Message
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="new-message">
-                <div class="new-message-input">
-                    <input type="text" name="chat" placeholder="Type something here">
-                </div>
-                <div class="new-message-button">
-                    <button>Send</button>
-                </div>
-            </div>
-        </section>
+        <%- include("_chatbox") -%>
     <%}%>
 
 </div>
