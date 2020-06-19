@@ -1,8 +1,11 @@
 const express = require("express");
 const app = express();
 const port = 8000;
+
 const cookieParser = require("cookie-parser");
 const expressLayouts = require('express-ejs-layouts');
+
+const passsportGoogle = require("./config/passport-google-oauth");
 
 const chatServer = require("http").Server(app);
 const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
