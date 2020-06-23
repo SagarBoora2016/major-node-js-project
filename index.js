@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const port = 8000;
 
+const env = require("./config/environment");
+
 const cookieParser = require("cookie-parser");
 const expressLayouts = require('express-ejs-layouts');
 
@@ -10,7 +12,7 @@ const passsportGoogle = require("./config/passport-google-oauth");
 const chatServer = require("http").Server(app);
 const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
 chatServer.listen(5000);
-console.log("char server is listeing on port 5000");
+// console.log("chat server is listeing on port 5000");
 
 const db = require("./config/mongoose");
 const session = require("express-session");
@@ -29,13 +31,13 @@ app.set("layout extractScripts",true);
 
 const sassMiddleware = require("node-sass-middleware");
 app.use(sassMiddleware({
-    src:"./assets/scss",
-    dest:"./assets/css",
+    src:env.src_path,
+    dest:env.dest_path,
     debug:false,
     outputStyle:"extended",
     prefix:"/css"
 }));
-app.use(express.static("./assets"));
+app.use(express.static(env.static_path));
 
 
 // console.log(expressLayouts + "used");

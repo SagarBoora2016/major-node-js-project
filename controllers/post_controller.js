@@ -36,8 +36,13 @@ module.exports.destroy =async function(req,res){
         if(post.user==req.user.id){
             // console.log(post);
             await Like.deleteMany({likeable:post,onModel:"Post"});
+          //getting error here,
             // console.log(post.comments);
             await Like.deleteMany({_id:{$in:post.comments}});
+            // this one, it runs but database se delete nhi hota
+            for(comment of post.comments){
+                await Like.deleteOne({likeable:comment, onModel:"Comment"});
+            }
 
 
             await Post.findByIdAndDelete(post._id);

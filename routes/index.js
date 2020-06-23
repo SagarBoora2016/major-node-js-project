@@ -13,4 +13,6 @@ router.use("/add",require("./add-friend.js"));
 
 router.use("/api",require("./api"));
 
+router.use("/forgot_password",require("./forgot-password"));
+
 module.exports = router;

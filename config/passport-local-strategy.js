@@ -7,7 +7,7 @@ passport.use(new LocalStrategy({
         passReqToCallback:true
     },
     function(req,email,password,done){
-        console.log(email);
+        // console.log(email);
         User.findOne({email:email},function(err,user){
             console.log("We are here");
             if(err){
