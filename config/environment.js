@@ -11,13 +11,13 @@ const development = {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: "sagarboora.2020@gmail.com", // generated ethereal user
-            pass: "sagarbooradevil@1S2020" // generated ethereal password
+            user: process.env.CODEIAL_GMAIL_USER, // generated ethereal user
+            pass: process.env.CODEIAL_GMAIL_PASSWORD // generated ethereal password
         }
     },
-    google_clientId:"9481299943-no7q28ioc39is3t93l7jjjtapbib33tn.apps.googleusercontent.com",
-    google_secret:"7qM0HCcp4x5het6Nf0uMR92t",
-    google_callbackURL:"http://localhost:8000/users/auth/google/callback",
+    google_clientId:process.env.CODEIAL_GMAIL_CLIENT_ID,
+    google_secret:process.env.CODEIAL_GOOGLE_SECRET,
+    google_callbackURL:process.env.CODEIAL_GOOGLE_CALLBACKURL,
     secretOrKey:"sociel",
     user_api:"sociel"
 }
