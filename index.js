@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 8000;
-
+console.log(process.env.Port);
 const env = require("./config/environment");
 
 const cookieParser = require("cookie-parser");
